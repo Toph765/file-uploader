@@ -6,7 +6,7 @@ async function loginGet(req, res) {
 
 const loginPost = passport.authenticate("local", {
     successRedirect: "/home",
-    failureRedirect: "/home",
+    failureRedirect: "/",
 });
 
 module.exports = {
