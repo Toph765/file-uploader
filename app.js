@@ -13,6 +13,7 @@ const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const loginRouter = require('./routes/loginRouter');
 const signupRouter = require('./routes/signupRouter');
 const indexRouter = require('./routes/indexRouter');
+const uploadRouter = require('./routes/uploadRouter');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -40,6 +41,7 @@ app.use(express.static(assetsPath));
 app.use("/home", indexRouter);
 app.use("/", loginRouter);
 app.use("/sign-up", signupRouter);
+app.use("/upload", uploadRouter);
 
 const PORT = process.env.PORT || 3000;
 
