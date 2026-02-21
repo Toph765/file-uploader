@@ -4,7 +4,8 @@ const indexRouter = Router();
 const isAuth = require("../lib/authMiddleware").isAuth;
 
 indexRouter.get("/", isAuth, indexController.indexGet);
-indexRouter.post("/:userId/upload", indexController.createFolderPost);
+indexRouter.post("/:userId/new-folder", indexController.createFolderPost);
+indexRouter.get("/userId/upload",indexController.uploaderGet);
 
 indexRouter.get("/log-out", indexController.logoutGet);
 
