@@ -19,6 +19,10 @@ async function createFolderPost(req, res) {
     res.redirect("/home");
 };
 
+async function uploaderGet(req, res) {
+    res.render(res.render("upload", {userId: req.user.id}));
+}
+
 async function logoutGet(req, res, next) {
     req.logout(err => {
         if (err) {
@@ -32,5 +36,6 @@ async function logoutGet(req, res, next) {
 module.exports = {
     indexGet,
     logoutGet,
+    uploaderGet,
     createFolderPost
 }
