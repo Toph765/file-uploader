@@ -10,7 +10,7 @@
         <p><%= message %><p>
     <%} else { %>
     <h1>Hello World!</h1>
-    <form action="/home/<%= userId %>/upload" method="post">
+    <form action="/home/<%= userId %>/new-folder" method="post">
         <div>
             <label for="newFolder">New Folder</label>
             <input type="text" name="newFolder" id="newFolder" require>
@@ -18,7 +18,9 @@
         <button type="submit">Create Folder</button>
     </form>
 
-    <a href="/upload">Upload File</a>
+    <form action="/upload/<%= userId%>" method="get">
+        <button type="submit">Upload</button>
+    </form>
 
     <form action="/home/log-out" method="get">
         <button type="submit">Log Out</button>
