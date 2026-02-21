@@ -6,7 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/upload" method="post">
+    <form action="/upload/<%= userId %>" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="folders">Folders</label>
+            <select name="folder" id="folders">
+                <option value="none">None</option>
+                <% if (locals.folders) { %>
+                   <% folders.map(folder => { %>
+                        <option value="<%= folder.name %>"><%= folder.name %></option>
+                    <% }) %>
+                <% } %>
+            </select>
+        </div>
         <div>
             <label for="upload">upload</label>
             <input type="file" name="filename" id="upload">
