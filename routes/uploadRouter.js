@@ -4,7 +4,7 @@ const uploadRouter = Router();
 const isAuth = require('../lib/authMiddleware').isAuth;
 const upload = require('../controllers/uploadMiddleware');
 
-uploadRouter.get("/:userId", isAuth, uploadController.uploadGet);
-uploadRouter.post("/:userId", upload.single("filename"), uploadController.uploadPost);
+uploadRouter.get("/", isAuth, uploadController.uploadGet);
+uploadRouter.post("/", upload.single("filename"), uploadController.uploadPost);
 
 module.exports = uploadRouter;
