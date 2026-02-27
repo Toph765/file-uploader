@@ -2,17 +2,29 @@ const prisma = require('../lib/prisma');
 const { connect } = require('../routes/indexRouter');
 
 async function indexGet(req, res) {
-    res.render("index", {userId: req.user.id});
+    const folders = await prisma.folder.findMany({
+        where: {
+            userId: req.user.id,
+        }
+    })
+
+    const files = await prisma.file.findMany({
+        where: {
+            userId: req.user.id,
+            folderId: null
+        }
+    })
+
+    res.render("index", {userId: req.user.id, folders, files});
 };
 
 async function createFolderPost(req, res) {
     const { newFolder } = req.body;
-    const { userId } = req.params;
 
     await prisma.folder.create({
         data: {
             name: newFolder,
-            userId: parseInt(userId)
+            userId: req.user.id
         },
     });
 
@@ -20,7 +32,7 @@ async function createFolderPost(req, res) {
 };
 
 async function uploaderGet(req, res) {
-    res.render(res.render("upload", {userId: req.user.id}));
+    res.render(res.render("upload"));
 }
 
 async function logoutGet(req, res, next) {
