@@ -10,7 +10,7 @@
         <p><%= message %><p>
     <%} else { %>
     <h1>Hello World!</h1>
-    <form action="/home/<%= userId %>/new-folder" method="post">
+    <form action="/home/new-folder" method="post">
         <div>
             <label for="newFolder">New Folder</label>
             <input type="text" name="newFolder" id="newFolder" require>
@@ -18,13 +18,31 @@
         <button type="submit">Create Folder</button>
     </form>
 
-    <form action="/upload/<%= userId%>" method="get">
+    <form action="/upload" method="get">
         <button type="submit">Upload</button>
     </form>
 
     <form action="/home/log-out" method="get">
         <button type="submit">Log Out</button>
     </form>
+
+    <div>
+        <% if (locals.folders) { %>
+            <% folders.map(folder => { %>
+                <div>
+                    <%= folder.name%>
+                </div>
+            <% }) %>
+        <% } %>
+
+        <% if (locals.files) { %>
+            <% files.map(file => { %>
+                <div>
+                    <%= file.fileName %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
     <% } %>
 </body>
 </html>
