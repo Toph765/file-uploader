@@ -1,5 +1,5 @@
 const prisma = require('../lib/prisma');
-const { connect } = require('../routes/indexRouter');
+const {format} = require('date-fns');
 
 async function indexGet(req, res) {
     const folders = await prisma.folder.findMany({
@@ -15,7 +15,7 @@ async function indexGet(req, res) {
         }
     })
 
-    res.render("index", {userId: req.user.id, folders, files});
+    res.render("index", {userId: req.user.id, folders, files, format});
 };
 
 async function createFolderPost(req, res) {
@@ -35,6 +35,17 @@ async function uploaderGet(req, res) {
     res.render(res.render("upload"));
 }
 
+async function downloadGet(req, res) {
+    const file = await prisma.file.findUnique({
+        where: {
+            id: parseInt(req.params.fileId)
+        }
+    })
+
+    res.redirect(file.fileUrl);
+    
+}
+
 async function logoutGet(req, res, next) {
     req.logout(err => {
         if (err) {
@@ -49,5 +60,6 @@ module.exports = {
     indexGet,
     logoutGet,
     uploaderGet,
-    createFolderPost
+    createFolderPost,
+    downloadGet
 }
