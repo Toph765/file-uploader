@@ -38,7 +38,10 @@
         <% if (locals.files) { %>
             <% files.map(file => { %>
                 <div>
-                    <%= file.fileName %>
+                    <span><%= file.fileName %></span>
+                    <span><%= file.fileSize %></span>
+                    <span><%= format(file.uploadedAt, 'PP') %></span>
+                    <a href="/home/<%= file.id %>/download">download</a>
                 </div>
             <% }) %>
         <% } %>
