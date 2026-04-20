@@ -31,6 +31,25 @@ async function createFolderPost(req, res) {
     res.redirect("/home");
 };
 
+async function folderGet(req, res) {
+    const folder = await prisma.folder.findFirst({
+        where: {
+            userId: req.user.id,
+            name: req.params.folderName
+        }
+    })
+
+    const files = await prisma.file.findMany({
+        where: {
+            folderId: folder.id
+        }
+    })
+
+    console.log(folder, files)
+
+    res.render("folder", {files: files, format});
+}
+
 async function uploaderGet(req, res) {
     res.render(res.render("upload"));
 }
@@ -61,5 +80,6 @@ module.exports = {
     logoutGet,
     uploaderGet,
     createFolderPost,
-    downloadGet
+    downloadGet,
+    folderGet
 }
