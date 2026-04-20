@@ -7,6 +7,7 @@ indexRouter.get("/", isAuth, indexController.indexGet);
 indexRouter.post("/new-folder", indexController.createFolderPost);
 indexRouter.get("/upload",indexController.uploaderGet);
 indexRouter.get("/:fileId/download", indexController.downloadGet);
+indexRouter.get("/:folderName", indexController.folderGet);
 
 indexRouter.get("/log-out", indexController.logoutGet);
 
