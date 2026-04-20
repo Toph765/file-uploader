@@ -29,9 +29,11 @@
     <div>
         <% if (locals.folders) { %>
             <% folders.map(folder => { %>
-                <div>
-                    <%= folder.name%>
-                </div>
+                <a href="/home/<%= folder.name %>">
+                    <div>
+                        <%= folder.name%>
+                    </div>
+                </a>
             <% }) %>
         <% } %>
 
