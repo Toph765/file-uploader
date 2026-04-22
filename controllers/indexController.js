@@ -13,7 +13,7 @@ async function indexGet(req, res) {
             userId: req.user.id,
             folderId: null
         }
-    })
+    });
 
     res.render("index", {userId: req.user.id, folders, files, format});
 };
@@ -43,9 +43,7 @@ async function folderGet(req, res) {
         where: {
             folderId: folder.id
         }
-    })
-
-    console.log(folder, files)
+    });
 
     res.render("folder", {files: files, format});
 }
@@ -65,6 +63,51 @@ async function downloadGet(req, res) {
     
 }
 
+async function deleteFileGet(req, res) {
+    const file = await prisma.file.findUnique({
+        where: {
+            id: parseInt(req.params.fileId)
+        }
+    });
+
+    const folderId = file.folderId;
+    let folderName = null;
+
+    if (folderId) {
+        const folder = await prisma.folder.findUnique({
+            where: {
+                id: folderId
+            }
+        });
+
+        folderName = folder.name;
+    }
+
+    await prisma.file.delete({
+        where: {
+            id: parseInt(req.params.fileId),
+            userId: req.user.id
+        }
+    });
+
+    if (folderName) {
+        res.redirect(`/home/${folderName}`)
+    } else {
+        res.redirect("/home");
+    }
+}
+
+async function deleteFolderGet(req, res) {
+    await prisma.folder.delete({
+        where: {
+            id: parseInt(req.params.folderId),
+            userId: req.user.id
+        }
+    })
+
+    res.redirect("/home")
+}
+
 async function logoutGet(req, res, next) {
     req.logout(err => {
         if (err) {
@@ -81,5 +124,7 @@ module.exports = {
     uploaderGet,
     createFolderPost,
     downloadGet,
-    folderGet
+    folderGet,
+    deleteFileGet,
+    deleteFolderGet
 }
