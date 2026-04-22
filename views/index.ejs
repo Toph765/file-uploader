@@ -29,24 +29,20 @@
     <div>
         <% if (locals.folders) { %>
             <% folders.map(folder => { %>
-                <a href="/home/<%= folder.name %>">
-                    <div>
-                        <%= folder.name%>
-                    </div>
-                </a>
-            <% }) %>
-        <% } %>
-
-        <% if (locals.files) { %>
-            <% files.map(file => { %>
                 <div>
-                    <span><%= file.fileName %></span>
-                    <span><%= file.fileSize %></span>
-                    <span><%= format(file.uploadedAt, 'PP') %></span>
-                    <a href="/home/<%= file.id %>/download">download</a>
+                    <a href="/home/<%= folder.name %>">
+                        <div>
+                            <%= folder.name%>
+                        </div>
+                    </a>
+                    <form action="/home/<%= folder.id %>/delete-folder" method="get">
+                        <button type="submit">delete</button>
+                    </form>
                 </div>
             <% }) %>
         <% } %>
+
+        <%- include("partials/file.ejs") %>
     </div>
     <% } %>
 </body>
