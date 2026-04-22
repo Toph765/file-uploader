@@ -5,6 +5,9 @@
             <span><%= file.fileSize %></span>
             <span><%= format(file.uploadedAt, 'PP') %></span>
             <a href="/home/<%= file.id %>/download">download</a>
+            <form action="/home/<%= file.id %>/delete-file" method="get">
+                <button type="submit">Delete</button>
+            </form>
         </div>
     <% }) %>
 <% } %>
