@@ -8,13 +8,7 @@
 <body>
     <h2>Sign Up</h2>
 
-    <% if (locals.errors) { %>
-        <ul>
-            <% errors.forEach(error => { %>
-                <li><%= error.msg %></li>
-            <% }) %>
-        </ul>
-    <% } %>
+    <%- include("partials/error.ejs") %>
 
     <form action="/sign-up" method="post">
         <div>
