@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <% if (locals.message) { %>
         <p><%= message %><p>
     <%} else { %>
     <h1>Hello World!</h1>
+    
+    <%- include("partials/error.ejs") %>
+
     <form action="/home/new-folder" method="post">
         <div>
             <label for="newFolder">New Folder</label>
-            <input type="text" name="newFolder" id="newFolder" require>
+            <input type="text" name="newFolder" id="newFolder" required>
         </div>
         <button type="submit">Create Folder</button>
     </form>
@@ -29,8 +33,8 @@
     <div>
         <% if (locals.folders) { %>
             <% folders.map(folder => { %>
-                <div>
-                    <a href="/home/<%= folder.name %>">
+                <div class="folder">
+                    <a href="/home/library/<%= folder.name %>">
                         <div>
                             <%= folder.name%>
                         </div>
