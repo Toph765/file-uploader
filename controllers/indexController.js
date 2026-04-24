@@ -1,5 +1,27 @@
 const prisma = require('../lib/prisma');
 const {format} = require('date-fns');
+const { body, validationResult, matchedData } = require("express-validator");
+
+const validateFolder = [
+    body("newFolder").trim()
+        .custom(async (value) => {
+            const folder = await prisma.folder.findFirst({
+                where: {
+                    name: value
+                }
+            });
+
+            if (value === "") {
+                throw new Error("Folder name must not be empty");
+            };
+
+            if (folder) {
+                throw new Error("Folder name already exist");
+            };
+
+            return true;
+        })
+]
 
 async function indexGet(req, res) {
     const folders = await prisma.folder.findMany({
@@ -15,13 +37,45 @@ async function indexGet(req, res) {
         }
     });
 
-    res.render("index", {userId: req.user.id, folders, files, format});
+    res.render("index", {
+        userId: req.user.id, 
+        folders, 
+        files, 
+        format
+    });
 };
 
-async function createFolderPost(req, res) {
-    const { newFolder } = req.body;
+const createFolderPost = [
+    validateFolder,
+    async (req, res) => {
+        const errors = validationResult(req);
 
-    await prisma.folder.create({
+        const folders = await prisma.folder.findMany({
+        where: {
+            userId: req.user.id,
+        }
+        })
+
+        const files = await prisma.file.findMany({
+            where: {
+                userId: req.user.id,
+                folderId: null
+            }
+        });
+
+        if(!errors.isEmpty()) {
+           return res.status(400).render("index", { 
+            userId: req.user.id, 
+            folders, 
+            files, 
+            format, 
+            errors: errors.array() 
+        });
+        };
+
+        const { newFolder } = matchedData(req);
+
+        await prisma.folder.create({
         data: {
             name: newFolder,
             userId: req.user.id
@@ -29,7 +83,8 @@ async function createFolderPost(req, res) {
     });
 
     res.redirect("/home");
-};
+    }
+];
 
 async function folderGet(req, res) {
     const folder = await prisma.folder.findFirst({
@@ -49,7 +104,7 @@ async function folderGet(req, res) {
 }
 
 async function uploaderGet(req, res) {
-    res.render(res.render("upload"));
+    res.render("upload");
 }
 
 async function downloadGet(req, res) {
