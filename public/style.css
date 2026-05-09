@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --font: "Inter", sans-serif;
+    --bgc-one: #EAEFEF;
+    --bgc-two: #BFC9D1;
+}
+
+/* GENERAL */
+
+body {
+  font-family: var(--font);
+}
+
+button {
+    border-style: none;
+    width: 5rem;
+    height: 1.6rem;
+
+    font-family: var(--font);
+    border: 1px solid black;
+    background-color: white;
+}
+
+a {
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
+/* LOG IN AND SIGN UP */
+
+.logIn,
+.signUp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 8rem;
+    gap: 0.8rem;
+}
+
+.logIn > form,
+.signUp > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 24rem;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    background-color: var(--bgc-one);
+}
+
+.logInInput,
+.signUpInput {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.logInErrorMsg {
+    padding: 1.2rem;
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem;
+    background-color: var(--bgc-two);
+}
+
+.homeLink   {
+    padding: 1rem 8rem;
+}
+
+.errors {
+    background-color: var(--bgc-two);
+}
+
+.fileFolderUpload {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 1rem;
+    background-color: var(--bgc-two);
+}
+
+.newFolder {
+    display: flex;
+    align-items: center;
+}
+
+.newFolder > button {
+    margin-left: 0.8rem;
+}
+
+/* MAIN */
+
+.assetsContainer {
+    padding: 1rem;
+}
+
+.foldersContainer,
+.filesContainer {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 8rem;
+    gap: 0.8rem;
+}
+
+.foldersContainer {
+    padding-bottom: 1.5rem;
+}
+
+.folder, .file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+    background-color: var(--bgc-one);
+}
+
+.folder > a,
+.folder > form,
+.file > span,
+.file > a,
+.file >  form {
+    flex: 1 0 3rem;
+}
+
+.deleteBtn {
+    text-align: end;
+}
+
+/* UPLOAD */
+
+.uploadFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.uploadForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 24rem;
+    gap: 0.8rem;
+    padding: 1.2rem;
+    background-color: var(--bgc-one);
+}
+
+.uploadForm > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.uploadInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+select {
+    width: 14rem;
+    height: 1.6rem;
+    font-family: var(--font);
+}
+
+input[type="file"] {
+    width: 14rem;
+    height: 1.6rem;
+    font-family: var(--font);
+    background-color: white;
+}
+
+input[type="file"]::file-selector-button {
+    display: none;
+    color: orange;
+}
+
+.inputFile {
+    border: 1px solid black;
+    background-color: white;
+    padding: 0 1.2rem;
+}
+
+.inputFile:hover {
+    color: white;
+    background-color: black;
+}
