@@ -52,27 +52,42 @@ async function uploadGet(req, res) {
 };
 
 async function uploadPost(req, res) {
-    const { folder } = req.body;
-    let folderId = null;
-
-    if (folder !== "none") {
-    const folderObj = await prisma.folder.findFirst({
+    if  (!req.file) {
+        const folders = await prisma.folder.findMany({
         where: {
-            name: folder,
             userId: req.user.id,
-        },
-    });
+        }
+        })
 
-    folderId = folderObj.id;
-    }
 
-    const uploadedBuffer = await uploadBuffer(req.file);
-    const url = cloudinary.url(uploadedBuffer.public_id, {
-        flags: "attachment",
-        resource_type: uploadedBuffer.resource_type,
-    });
+        res.render("upload", {
+            error: "No file was selected",
+            userId: req.user.id,
+            folders,
+            });
+    } else {
+        const { folder } = req.body;
+        let folderId = null;
 
-    await prisma.file.create({
+        if (folder !== "none") {
+        const folderObj = await prisma.folder.findFirst({
+            where: {
+                name: folder,
+                userId: req.user.id,
+            },
+        });
+
+        folderId = folderObj.id;
+        }
+
+        const uploadedBuffer = await uploadBuffer(req.file);
+        const url = cloudinary.url(uploadedBuffer.public_id, {
+            flags: "attachment",
+            resource_type: uploadedBuffer.resource_type,
+        });
+
+        
+        await prisma.file.create({
         data: {
             fileName: req.file.originalname,
             fileUrl: url,
@@ -80,10 +95,11 @@ async function uploadPost(req, res) {
             userId: req.user.id,
             folderId
         }
-    })
+        })
 
-    res.redirect("/home");
-}
+        res.redirect("/home");  
+    }  
+};
 
 module.exports = {
     uploadGet,
