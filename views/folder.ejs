@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <%- include("partials/file.ejs") %>
-    <a href="/home">Back Home</a>
+    <%- include("partials/header.ejs") %>
+    <p class="homeLink">
+        <a href="/home">Back Home</a>
+    </p>
+    <div class="filesContainer">
+        <%- include("partials/file.ejs") %>
+    </div>
 </body>
 </html>

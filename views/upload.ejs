@@ -4,26 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <form action="/upload/" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="folders">Folders</label>
-            <select name="folder" id="folders">
-                <option value="none">None</option>
-                <% if (locals.folders) { %>
-                   <% folders.map(folder => { %>
-                        <option value="<%= folder.name %>"><%= folder.name %></option>
-                    <% }) %>
-                <% } %>
-            </select>
-        </div>
-        <div>
-            <label for="upload">upload</label>
-            <input type="file" name="filename" id="upload">
-        </div>
-        <button type="submit">Upload File</button>
-    </form>
-    <a href="/home">Back</a>
+    <%- include("partials/header.ejs") %>
+
+    <p class="homeLink">
+        <a href="/home">Back home</a>
+    </p>
+
+    <div class="uploadFormContainer">
+        <% if (locals.error) { %>
+        <p><%= error %></p>
+        <% } %>
+        <form action="/upload/" method="post" enctype="multipart/form-data" class="uploadForm">
+            <div>
+                <label for="folders">Folders</label>
+                <select name="folder" id="folders">
+                    <option value="none">None</option>
+                    <% if (locals.folders) { %>
+                    <% folders.map(folder => { %>
+                            <option value="<%= folder.name %>"><%= folder.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+            </div>
+            <div class="uploadInput">
+                <label for="upload" class="inputFile">upload</label>
+                <input type="file" name="filename" id="upload">
+            </div>
+            <button type="submit">Upload File</button>
+        </form>
+    </div>
+    
 </body>
 </html>

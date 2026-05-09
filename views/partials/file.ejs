@@ -1,11 +1,11 @@
 <% if (locals.files) { %>
     <% files.map(file => { %>
-        <div>
+        <div class="file">
             <span><%= file.fileName %></span>
             <span><%= file.fileSize %></span>
             <span><%= format(file.uploadedAt, 'PP') %></span>
             <a href="/home/<%= file.id %>/download">download</a>
-            <form action="/home/<%= file.id %>/delete-file" method="get">
+            <form action="/home/<%= file.id %>/delete-file" method="get" class="deleteBtn">
                 <button type="submit">Delete</button>
             </form>
         </div>

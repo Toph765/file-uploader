@@ -8,45 +8,51 @@
 </head>
 <body>
     <% if (locals.message) { %>
-        <p><%= message %><p>
+        <div class="logInErrorMsg"> 
+            <p><%= message %><p>
+            <a href="/">Back to log in</a>
+        </div>
     <%} else { %>
-    <h1>Hello World!</h1>
+    <%- include("partials/header.ejs") %>
     
     <%- include("partials/error.ejs") %>
 
-    <form action="/home/new-folder" method="post">
-        <div>
-            <label for="newFolder">New Folder</label>
-            <input type="text" name="newFolder" id="newFolder" required>
+    <div class="fileFolderUpload">
+        <form action="/home/new-folder" method="post" class="newFolder">
+            <div>
+                <label for="newFolder">New Folder</label>
+                <input type="text" name="newFolder" id="newFolder" required>
+            </div>
+            <button type="submit">Create</button>
+        </form>
+
+        <form action="/upload" method="get">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+    
+    <div class="assetsContainer">
+        <div class="foldersContainer">
+            <% if (locals.folders) { %>
+                <% folders.map(folder => { %>
+                    <div class="folder">
+                        <a href="/home/library/<%= folder.name %>" class="folderName">
+                            <div>
+                                <%= folder.name%>
+                            </div>
+                        </a>
+                        <form action="/home/<%= folder.id %>/delete-folder" method="get" class="deleteBtn">
+                            <button type="submit">delete</button>
+                        </form>
+                    </div>
+                <% }) %>
+            <% } %>
         </div>
-        <button type="submit">Create Folder</button>
-    </form>
-
-    <form action="/upload" method="get">
-        <button type="submit">Upload</button>
-    </form>
-
-    <form action="/home/log-out" method="get">
-        <button type="submit">Log Out</button>
-    </form>
-
-    <div>
-        <% if (locals.folders) { %>
-            <% folders.map(folder => { %>
-                <div class="folder">
-                    <a href="/home/library/<%= folder.name %>">
-                        <div>
-                            <%= folder.name%>
-                        </div>
-                    </a>
-                    <form action="/home/<%= folder.id %>/delete-folder" method="get">
-                        <button type="submit">delete</button>
-                    </form>
-                </div>
-            <% }) %>
-        <% } %>
-
-        <%- include("partials/file.ejs") %>
+        
+        <div class="filesContainer">
+            <%- include("partials/file.ejs") %>
+        </div>
+        
     </div>
     <% } %>
 </body>
