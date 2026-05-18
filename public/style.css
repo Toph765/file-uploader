@@ -121,6 +121,11 @@ button:hover {
     padding: 1rem;
 }
 
+.emptyMsg{
+    text-align: center;
+    color: gray;
+}
+
 .foldersContainer,
 .filesContainer {
     display: flex;
