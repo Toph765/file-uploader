@@ -32,26 +32,30 @@
     </div>
     
     <div class="assetsContainer">
-        <div class="foldersContainer">
-            <% if (locals.folders) { %>
-                <% folders.map(folder => { %>
-                    <div class="folder">
-                        <a href="/home/library/<%= folder.name %>" class="folderName">
-                            <div>
-                                <%= folder.name%>
-                            </div>
-                        </a>
-                        <form action="/home/<%= folder.id %>/delete-folder" method="get" class="deleteBtn">
-                            <button type="submit">delete</button>
-                        </form>
-                    </div>
-                <% }) %>
-            <% } %>
-        </div>
+        <% if (locals.folders.length === 0 && locals.files.length === 0) { %>
+            <p class="emptyMsg">You currently have no files or folders</p>
+        <% } else { %>
+            <div class="foldersContainer">
+                <% if (locals.folders) { %>
+                    <% folders.map(folder => { %>
+                        <div class="folder">
+                            <a href="/home/library/<%= folder.name %>" class="folderName">
+                                <div>
+                                    <%= folder.name%>
+                                </div>
+                            </a>
+                            <form action="/home/<%= folder.id %>/delete-folder" method="get" class="deleteBtn">
+                                <button type="submit">delete</button>
+                            </form>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
         
-        <div class="filesContainer">
-            <%- include("partials/file.ejs") %>
-        </div>
+            <div class="filesContainer">
+                <%- include("partials/file.ejs") %>
+            </div>
+        <% } %>
         
     </div>
     <% } %>

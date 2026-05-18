@@ -12,7 +12,11 @@
         <a href="/home">Back Home</a>
     </p>
     <div class="filesContainer">
-        <%- include("partials/file.ejs") %>
+        <% if (locals.files.length === 0) { %>
+            <p class="emptyMsg">You currently have no files</p>
+        <% } else { %>
+            <%- include("partials/file.ejs") %>
+        <% } %>
     </div>
 </body>
 </html>
