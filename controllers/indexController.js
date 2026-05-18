@@ -4,10 +4,11 @@ const { body, validationResult, matchedData } = require("express-validator");
 
 const validateFolder = [
     body("newFolder").trim()
-        .custom(async (value) => {
+        .custom(async (value, {req, res}) => {
             const folder = await prisma.folder.findFirst({
                 where: {
-                    name: value
+                    name: value,
+                    userId: req.user.id
                 }
             });
 
